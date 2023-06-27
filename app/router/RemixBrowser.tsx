@@ -1,13 +1,13 @@
-import { UNSAFE_RemixContext as RemixContext } from "@remix-run/react";
+import {
+  UNSAFE_RemixContext as RemixContext,
+  PATCHED_createClientRoutes as createClientRoutes,
+  PATCHED_RemixErrorBoundary as RemixErrorBoundary,
+  PATCHED_RemixRootDefaultErrorBoundary as RemixRootDefaultErrorBoundary,
+} from "@remix-run/react";
 import type { Router } from "@remix-run/router";
 import type { ReactElement } from "react";
 import * as React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { createClientRoutes } from "./createClientRoutes";
-import {
-  RemixErrorBoundary,
-  RemixRootDefaultErrorBoundary,
-} from "@remix-run/react/dist/errorBoundaries";
 
 // import type { EntryContext } from "./entry";
 // import type { RouteModules } from "./routeModules";
@@ -152,8 +152,12 @@ let router: Router;
  * that was received from the server.
  */
 export function RemixBrowser(_props: RemixBrowserProps): ReactElement {
-  console.log(RemixContext);
   if (!router) {
+    console.log(
+      "[RemixBrowser] NO ROUTER - window.__remixRouteModules",
+      window.__remixRouteModules
+    );
+
     let routes = createClientRoutes(
       window.__remixManifest.routes,
       window.__remixRouteModules,
@@ -195,6 +199,11 @@ export function RemixBrowser(_props: RemixBrowserProps): ReactElement {
       console.error(errorMsg);
       window.location.reload();
     }
+  } else {
+    console.log(
+      "[RemixBrowser] WITH ROUTER - window.__remixRouteModules",
+      window.__remixRouteModules
+    );
   }
 
   let [location, setLocation] = React.useState(router.state.location);
@@ -211,6 +220,7 @@ export function RemixBrowser(_props: RemixBrowserProps): ReactElement {
   // boundary also throws and we need to bubble up outside of the router entirely.
   // Then we need a stateful location here so the user can back-button navigate
   // out of there
+
   return (
     <RemixContext.Provider
       value={{

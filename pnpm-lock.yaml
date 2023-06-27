@@ -1,5 +1,14 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+patchedDependencies:
+  '@remix-run/react@1.18.0':
+    hash: tc7coqrqssejcmafdnv3ivobk4
+    path: patches/@remix-run__react@1.18.0.patch
+
 dependencies:
   '@remix-run/css-bundle':
     specifier: ^1.18
@@ -9,7 +18,7 @@ dependencies:
     version: 1.18.0
   '@remix-run/react':
     specifier: ^1.18
-    version: 1.18.0(react-dom@18.2.0)(react@18.2.0)
+    version: 1.18.0(patch_hash=tc7coqrqssejcmafdnv3ivobk4)(react-dom@18.2.0)(react@18.2.0)
   '@remix-run/router':
     specifier: ^1.7
     version: 1.7.0
@@ -1903,7 +1912,7 @@ packages:
       source-map-support: 0.5.21
       stream-slice: 0.1.2
 
-  /@remix-run/react@1.18.0(react-dom@18.2.0)(react@18.2.0):
+  /@remix-run/react@1.18.0(patch_hash=tc7coqrqssejcmafdnv3ivobk4)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-Xx8O059eSsa/zAFqGKnei9sOBQLXGpbKOA19kRH7HbtnNm3V/kRbTSbfZmNh2LVNXCpcaWBRtai7C01fCJay0Q==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
@@ -1915,6 +1924,7 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
       react-router-dom: 6.14.0(react-dom@18.2.0)(react@18.2.0)
     dev: false
+    patched: true
 
   /@remix-run/router@1.7.0:
     resolution: {integrity: sha512-Eu1V3kz3mV0wUpVTiFHuaT8UD1gj/0VnoFHQYX35xlslQUpe8CuYoKFn9d4WZFHm3yDywz6ALZuGdnUPKrNeAw==}

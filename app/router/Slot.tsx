@@ -1,4 +1,5 @@
 import { useContext } from "react";
+
 import {
   UNSAFE_DataRouterContext,
   UNSAFE_DataRouterStateContext,
@@ -90,16 +91,15 @@ export function Scripts(props: SlotScriptsProps) {
         )};`
     )
     .join("\n")}
-    setTimeout(() => {
       console.log("[SlotScripts] update remixRouteModules", window.__remixRouteModules)
       window.__remixRouteModules = Object.assign({}, window.__remixRouteModules, {${matches
         .map(
           (match, index) => `${JSON.stringify(match.route.id)}:route${index}`
         )
         .join(",")}});
-    }, 10)`;
+    `;
 
-    // console.log("routeModulesScript", routeModulesScript);
+    console.log("routeModulesScript", routeModulesScript);
 
     return (
       <>
