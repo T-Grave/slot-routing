@@ -99,7 +99,7 @@ export function Scripts(props: SlotScriptsProps) {
         .join(",")}});
     `;
 
-    console.log("routeModulesScript", routeModulesScript);
+    // console.log("routeModulesScript", routeModulesScript);
 
     return (
       <>
@@ -168,12 +168,12 @@ export default function Slot({
   }
 
   const matches = matchRoutes(dataRouter?.router.routes ?? [], location);
-  if (typeof window !== "undefined")
-    console.log(
-      "[Slot] window.__remixRouteModules",
-      window.__remixRouteModules
-    );
-  console.log("[Slot] matches", matches);
+  // if (typeof window !== "undefined")
+  //   console.log(
+  //     "[Slot] window.__remixRouteModules",
+  //     window.__remixRouteModules
+  //   );
+  // console.log("[Slot] matches", matches);
 
   // TODO: Probably cleaner if we can pull the necesary logic in here out to our own function,
   // as much of it is not needed for our purposes + it might change upstream and keeping it in sync will be an issue

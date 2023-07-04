@@ -4,7 +4,7 @@ import Slot from "~/router/Slot";
 export default function DefaultLayout() {
   // const location = useLocation();
   const [searchParams] = useSearchParams();
-  const sidebar = searchParams.get("sidebar");
+  const sidebar = searchParams.get("slot-sidebar");
 
   return (
     <div
@@ -22,9 +22,9 @@ export default function DefaultLayout() {
         }}
       >
         <Link to={`/a`}>Open A inside main</Link>
-        <Link to={`?sidebar=/a`}>Open A inside sidebar</Link>
+        <Link to={`?slot-sidebar=/a`}>Open A inside sidebar</Link>
         <Link to={`/b`}>Open B inside main</Link>
-        <Link to={`?sidebar=/b`}>Open B inside sidebar</Link>
+        <Link to={`?slot-sidebar=/b`}>Open B inside sidebar</Link>
       </nav>
       <div
         style={{

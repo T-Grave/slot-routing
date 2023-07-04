@@ -153,10 +153,10 @@ let router: Router;
  */
 export function RemixBrowser(_props: RemixBrowserProps): ReactElement {
   if (!router) {
-    console.log(
-      "[RemixBrowser] NO ROUTER - window.__remixRouteModules",
-      window.__remixRouteModules
-    );
+    // console.log(
+    //   "[RemixBrowser] NO ROUTER - window.__remixRouteModules",
+    //   window.__remixRouteModules
+    // );
 
     let routes = createClientRoutes(
       window.__remixManifest.routes,
@@ -200,10 +200,10 @@ export function RemixBrowser(_props: RemixBrowserProps): ReactElement {
       window.location.reload();
     }
   } else {
-    console.log(
-      "[RemixBrowser] WITH ROUTER - window.__remixRouteModules",
-      window.__remixRouteModules
-    );
+    // console.log(
+    //   "[RemixBrowser] WITH ROUTER - window.__remixRouteModules",
+    //   window.__remixRouteModules
+    // );
   }
 
   let [location, setLocation] = React.useState(router.state.location);

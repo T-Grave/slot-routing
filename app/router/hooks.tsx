@@ -178,7 +178,7 @@ export function useRoutesImpl(
     );
   }
 
-  console.log("[useRoutesImpl]", matches);
+  // console.log("[useRoutesImpl]", matches);
 
   let renderedMatches = _renderMatches(
     matches &&

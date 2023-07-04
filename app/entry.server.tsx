@@ -44,9 +44,6 @@ function handleBotRequest(
 ) {
   return new Promise((resolve, reject) => {
     let shellRendered = false;
-
-    // console.log(remixContext.staticHandlerContext.matches);
-
     const { pipe, abort } = renderToPipeableStream(
       <RemixServer
         context={remixContext}
