@@ -1,16 +1,12 @@
 lockfileVersion: '6.0'
 
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
-
 patchedDependencies:
-  '@remix-run/react@1.18.1':
-    hash: tc7coqrqssejcmafdnv3ivobk4
-    path: patches/@remix-run__react@1.18.1.patch
   '@remix-run/router@1.7.1':
-    hash: elwqfrehf6xy5tzossleymbas4
+    hash: aukftsvc252u4uyn3sg2bygqsi
     path: patches/@remix-run__router@1.7.1.patch
+  react-router@6.14.1:
+    hash: 7ot2rfj4esabxu2oluh2afkipa
+    path: patches/react-router@6.14.1.patch
 
 dependencies:
   '@remix-run/css-bundle':
@@ -21,10 +17,10 @@ dependencies:
     version: 1.18.1
   '@remix-run/react':
     specifier: 1.18.1
-    version: 1.18.1(patch_hash=tc7coqrqssejcmafdnv3ivobk4)(react-dom@18.2.0)(react@18.2.0)
+    version: 1.18.1(react-dom@18.2.0)(react@18.2.0)
   '@remix-run/router':
     specifier: 1.7.1
-    version: 1.7.1(patch_hash=elwqfrehf6xy5tzossleymbas4)
+    version: 1.7.1(patch_hash=aukftsvc252u4uyn3sg2bygqsi)
   '@remix-run/serve':
     specifier: 1.18.1
     version: 1.18.1
@@ -38,11 +34,11 @@ dependencies:
     specifier: ^18.2.0
     version: 18.2.0(react@18.2.0)
   react-router:
-    specifier: ^6.14.0
-    version: 6.14.0(react@18.2.0)
+    specifier: ^6.14.1
+    version: 6.14.1(patch_hash=7ot2rfj4esabxu2oluh2afkipa)(react@18.2.0)
   react-router-dom:
-    specifier: ^6.14.0
-    version: 6.14.0(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^6.14.1
+    version: 6.14.1(react-dom@18.2.0)(react@18.2.0)
   tiny-invariant:
     specifier: ^1.3.1
     version: 1.3.1
@@ -1915,25 +1911,25 @@ packages:
       source-map-support: 0.5.21
       stream-slice: 0.1.2
 
-  /@remix-run/react@1.18.1(patch_hash=tc7coqrqssejcmafdnv3ivobk4)(react-dom@18.2.0)(react@18.2.0):
+  /@remix-run/react@1.18.1(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-vs94AxXXaXU0K3W4zQ05hR9R1+Ief9oq5JZOZKdeFoM2dgdSb6u/ovRNyQK1ukzjIBO9vARpNC0HMeqN/eGhtw==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
     dependencies:
-      '@remix-run/router': 1.7.1(patch_hash=elwqfrehf6xy5tzossleymbas4)
+      '@remix-run/router': 1.7.1(patch_hash=aukftsvc252u4uyn3sg2bygqsi)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       react-router-dom: 6.14.1(react-dom@18.2.0)(react@18.2.0)
     dev: false
-    patched: true
 
   /@remix-run/router@1.7.0:
     resolution: {integrity: sha512-Eu1V3kz3mV0wUpVTiFHuaT8UD1gj/0VnoFHQYX35xlslQUpe8CuYoKFn9d4WZFHm3yDywz6ALZuGdnUPKrNeAw==}
     engines: {node: '>=14'}
+    dev: true
 
-  /@remix-run/router@1.7.1(patch_hash=elwqfrehf6xy5tzossleymbas4):
+  /@remix-run/router@1.7.1(patch_hash=aukftsvc252u4uyn3sg2bygqsi):
     resolution: {integrity: sha512-bgVQM4ZJ2u2CM8k1ey70o1ePFXsEzYVZoWghh6WjM8p59jQ7HxzbHW4SbnWFG7V9ig9chLawQxDTZ3xzOF8MkQ==}
     engines: {node: '>=14'}
     patched: true
@@ -1967,7 +1963,7 @@ packages:
     resolution: {integrity: sha512-E0sQlgUQG2ytFmUH7zRH7n2MufnP6WWWq1KpRoiuwJZxfTFIzaiCCIiNqbP/uXGWDGcwEevpawNUzzszL1tT0w==}
     engines: {node: '>=14.0.0'}
     dependencies:
-      '@remix-run/router': 1.7.1(patch_hash=elwqfrehf6xy5tzossleymbas4)
+      '@remix-run/router': 1.7.1(patch_hash=aukftsvc252u4uyn3sg2bygqsi)
       '@types/cookie': 0.4.1
       '@web3-storage/multipart-parser': 1.0.0
       cookie: 0.4.2
@@ -6295,19 +6291,6 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /react-router-dom@6.14.0(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-YEwlApKwzMMMbGbhh+Q7MsloTldcwMgHxUY/1g0uA62+B1hZo2jsybCWIDCL8zvIDB1FA0pBKY9chHbZHt+2dQ==}
-    engines: {node: '>=14'}
-    peerDependencies:
-      react: '>=16.8'
-      react-dom: '>=16.8'
-    dependencies:
-      '@remix-run/router': 1.7.0
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-      react-router: 6.14.0(react@18.2.0)
-    dev: false
-
   /react-router-dom@6.14.1(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-ssF6M5UkQjHK70fgukCJyjlda0Dgono2QGwqGvuk7D+EDGHdacEN3Yke2LTMjkrpHuFwBfDFsEjGVXBDmL+bWw==}
     engines: {node: '>=14'}
@@ -6315,31 +6298,22 @@ packages:
       react: '>=16.8'
       react-dom: '>=16.8'
     dependencies:
-      '@remix-run/router': 1.7.1(patch_hash=elwqfrehf6xy5tzossleymbas4)
+      '@remix-run/router': 1.7.1(patch_hash=aukftsvc252u4uyn3sg2bygqsi)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-      react-router: 6.14.1(react@18.2.0)
+      react-router: 6.14.1(patch_hash=7ot2rfj4esabxu2oluh2afkipa)(react@18.2.0)
     dev: false
 
-  /react-router@6.14.0(react@18.2.0):
-    resolution: {integrity: sha512-OD+vkrcGbvlwkspUFDgMzsu1RXwdjNh83YgG/28lBnDzgslhCgxIqoExLlxsfTpIygp7fc+Hd3esloNwzkm2xA==}
-    engines: {node: '>=14'}
-    peerDependencies:
-      react: '>=16.8'
-    dependencies:
-      '@remix-run/router': 1.7.0
-      react: 18.2.0
-    dev: false
-
-  /react-router@6.14.1(react@18.2.0):
+  /react-router@6.14.1(patch_hash=7ot2rfj4esabxu2oluh2afkipa)(react@18.2.0):
     resolution: {integrity: sha512-U4PfgvG55LdvbQjg5Y9QRWyVxIdO1LlpYT7x+tMAxd9/vmiPuJhIwdxZuIQLN/9e3O4KFDHYfR9gzGeYMasW8g==}
     engines: {node: '>=14'}
     peerDependencies:
       react: '>=16.8'
     dependencies:
-      '@remix-run/router': 1.7.1(patch_hash=elwqfrehf6xy5tzossleymbas4)
+      '@remix-run/router': 1.7.1(patch_hash=aukftsvc252u4uyn3sg2bygqsi)
       react: 18.2.0
     dev: false
+    patched: true
 
   /react@18.2.0:
     resolution: {integrity: sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==}
@@ -7522,3 +7496,7 @@ packages:
   /zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
     dev: true
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false

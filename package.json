@@ -16,8 +16,8 @@
     "isbot": "^3.6.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router": "^6.14.0",
-    "react-router-dom": "^6.14.0",
+    "react-router": "^6.14.1",
+    "react-router-dom": "^6.14.1",
     "tiny-invariant": "^1.3.1"
   },
   "devDependencies": {
@@ -33,8 +33,8 @@
   },
   "pnpm": {
     "patchedDependencies": {
-      "@remix-run/react@1.18.1": "patches/@remix-run__react@1.18.1.patch",
-      "@remix-run/router@1.7.1": "patches/@remix-run__router@1.7.1.patch"
+      "@remix-run/router@1.7.1": "patches/@remix-run__router@1.7.1.patch",
+      "react-router@6.14.1": "patches/react-router@6.14.1.patch"
     }
   }
 }

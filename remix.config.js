@@ -5,6 +5,17 @@ module.exports = {
   // assetsBuildDirectory: "public/build",
   // serverBuildPath: "build/index.js",
   // publicPath: "/build/",
+  // routes: async (defineRoutes) => {
+  //   return defineRoutes((route) => {
+  //     const contentRoutes = () => {
+  //       route("a", "routes/a.tsx");
+  //       route("b", "routes/b.tsx");
+  //     };
+  //     contentRoutes();
+  //     route("/*", "layouts/default.tsx");
+  //     route("/special-layout/*", "layouts/special-layout.tsx");
+  //   });
+  // },
   serverModuleFormat: "cjs",
   unstable_dev: true,
   future: {

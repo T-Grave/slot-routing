@@ -1,5 +1,5 @@
 diff --git a/dist/router.cjs.js b/dist/router.cjs.js
-index c8d73defd805441c2962523d43524286a4148473..aa62c9b71c0748eb9798b019faf03875b40b69e2 100644
+index c8d73defd805441c2962523d43524286a4148473..c134e01c31652911f0dbd1f29b3bbb964678343f 100644
 --- a/dist/router.cjs.js
 +++ b/dist/router.cjs.js
 @@ -718,19 +718,45 @@ function matchRoutes(routes, locationArg, basename) {
@@ -59,7 +59,7 @@ index c8d73defd805441c2962523d43524286a4148473..aa62c9b71c0748eb9798b019faf03875
  }
  function flattenRoutes(routes, branches, parentsMeta, parentPath) {
 diff --git a/dist/router.js b/dist/router.js
-index 50611e682ca3a3df237e1b60a010ea460524f021..7adf247b5745c5bc7629cc5683d957253ed849aa 100644
+index 50611e682ca3a3df237e1b60a010ea460524f021..8911f63750793347aca594f19058c8ca688adb65 100644
 --- a/dist/router.js
 +++ b/dist/router.js
 @@ -510,19 +510,45 @@ function matchRoutes(routes, locationArg, basename) {
@@ -118,15 +118,7 @@ index 50611e682ca3a3df237e1b60a010ea460524f021..7adf247b5745c5bc7629cc5683d95725
    return matches;
  }
  function flattenRoutes(routes, branches, parentsMeta, parentPath) {
-@@ -1667,6 +1693,7 @@ function createRouter(init) {
-     // Create a controller/Request for this navigation
-     pendingNavigationController = new AbortController();
-     let request = createClientSideRequest(init.history, location, pendingNavigationController.signal, opts && opts.submission);
-+    console.log('[startNavigation] request', request)
-     let pendingActionData;
-     let pendingError;
-     if (opts && opts.pendingError) {
-@@ -2250,7 +2277,14 @@ function createRouter(init) {
+@@ -2250,7 +2276,14 @@ function createRouter(init) {
      // Call all navigation loaders and revalidating fetcher loaders in parallel,
      // then slice off the results into separate arrays so we can handle them
      // accordingly

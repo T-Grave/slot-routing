@@ -1,12 +1,7 @@
-import { Link, Outlet, useLocation, useSearchParams } from "@remix-run/react";
+import { Link } from "@remix-run/react";
 import Slot from "~/router/Slot";
-import { SlotRouter } from "~/router/SlotRouter";
 
-export default function DefaultLayout() {
-  // const location = useLocation();
-  const [searchParams] = useSearchParams();
-  const sidebar = searchParams.get("slot-sidebar");
-
+export default function SpecialLayout() {
   return (
     <div
       style={{
@@ -22,9 +17,9 @@ export default function DefaultLayout() {
           borderRight: "1px solid #ccc",
         }}
       >
-        <Link to={`/a`}>Open A inside main</Link>
+        <Link to={`/special-layout?slot-main=/a`}>Open A inside main</Link>
         <Link to={`?slot-sidebar=/a`}>Open A inside sidebar</Link>
-        <Link to={`/b`}>Open B inside main</Link>
+        <Link to={`/special-layout?slot-main=/b`}>Open B inside main</Link>
         <Link to={`?slot-sidebar=/b`}>Open B inside sidebar</Link>
       </nav>
       <div
@@ -35,9 +30,9 @@ export default function DefaultLayout() {
           padding: 20,
         }}
       >
-        <h1>Default Layout</h1>
+        <h1>Special Layout</h1>
         <div>
-          <Outlet />
+          <Slot name="main" />
         </div>
       </div>
       <div
@@ -48,8 +43,7 @@ export default function DefaultLayout() {
           height: "100%",
         }}
       >
-        {/* {sidebar ? <Slot location={sidebar} name="sidebar" /> : "empty"} */}
-        {sidebar ? <SlotRouter path={sidebar} /> : "empty"}
+        <Slot name="sidebar" />
       </div>
     </div>
   );

@@ -1,0 +1,106 @@
+diff --git a/dist/index.js b/dist/index.js
+index 91f8873f8dda0abcac23fee7e820854dee6d0e57..5cb137b137ce415f0c05ae0561d1910b6779e588 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -318,7 +318,7 @@ function useRoutes(routes, locationArg) {
+ }
+ 
+ // Internal implementation with accept optional param for RouterProvider usage
+-function useRoutesImpl(routes, locationArg, dataRouterState) {
++function useRoutesImpl(routes, locationArg, dataRouterState, slotName) {
+   !useInRouterContext() ? process.env.NODE_ENV !== "production" ? UNSAFE_invariant(false, // TODO: This error is probably because they somehow have 2 versions of the
+   // router loaded. We can help them understand how to avoid that.
+   "useRoutes() may be used only in the context of a <Router> component.") : UNSAFE_invariant(false) : void 0;
+@@ -333,7 +333,7 @@ function useRoutesImpl(routes, locationArg, dataRouterState) {
+   let parentPathname = routeMatch ? routeMatch.pathname : "/";
+   let parentPathnameBase = routeMatch ? routeMatch.pathnameBase : "/";
+   let parentRoute = routeMatch && routeMatch.route;
+-  if (process.env.NODE_ENV !== "production") {
++  if (process.env.NODE_ENV !== "production" && !slotName) {
+     // You won't get a warning about 2 different <Routes> under a <Route>
+     // without a trailing *, but this is a best-effort warning anyway since we
+     // cannot even give the warning unless they land at the parent route.
+@@ -371,7 +371,7 @@ function useRoutesImpl(routes, locationArg, dataRouterState) {
+   let remainingPathname = parentPathnameBase === "/" ? pathname : pathname.slice(parentPathnameBase.length) || "/";
+   let matches = matchRoutes(routes, {
+     pathname: remainingPathname
+-  });
++  }).filter((m) => !slotName || m.pathname !== "/");
+   if (process.env.NODE_ENV !== "production") {
+     process.env.NODE_ENV !== "production" ? UNSAFE_warning(parentRoute || matches != null, "No routes matched location \"" + location.pathname + location.search + location.hash + "\" ") : void 0;
+     process.env.NODE_ENV !== "production" ? UNSAFE_warning(matches == null || matches[matches.length - 1].route.element !== undefined || matches[matches.length - 1].route.Component !== undefined, "Matched leaf route at location \"" + location.pathname + location.search + location.hash + "\" " + "does not have an element or Component. This means it will render an <Outlet /> with a " + "null value by default resulting in an \"empty\" page.") : void 0;
+diff --git a/dist/lib/hooks.d.ts b/dist/lib/hooks.d.ts
+index 471c8853960da59a09186ff9475568bd5203d33c..4b313f1a814dbaa4dc448a450e189ddbaf711cb6 100644
+--- a/dist/lib/hooks.d.ts
++++ b/dist/lib/hooks.d.ts
+@@ -96,7 +96,7 @@ export declare function useResolvedPath(to: To, { relative }?: {
+  * @see https://reactrouter.com/hooks/use-routes
+  */
+ export declare function useRoutes(routes: RouteObject[], locationArg?: Partial<Location> | string): React.ReactElement | null;
+-export declare function useRoutesImpl(routes: RouteObject[], locationArg?: Partial<Location> | string, dataRouterState?: RemixRouter["state"]): React.ReactElement | null;
++export declare function useRoutesImpl(routes: RouteObject[], locationArg?: Partial<Location> | string, dataRouterState?: RemixRouter["state"], slotName?: string): React.ReactElement | null;
+ type RenderErrorBoundaryProps = React.PropsWithChildren<{
+     location: Location;
+     revalidation: RevalidationState;
+diff --git a/dist/react-router.development.js b/dist/react-router.development.js
+index 0323f68accfe779895ee3ae754968339d634de68..28e02c81d7e3439e9585d70e8250434531a9d5b5 100644
+--- a/dist/react-router.development.js
++++ b/dist/react-router.development.js
+@@ -269,7 +269,7 @@ function useRoutes(routes, locationArg) {
+   return useRoutesImpl(routes, locationArg);
+ }
+ // Internal implementation with accept optional param for RouterProvider usage
+-function useRoutesImpl(routes, locationArg, dataRouterState) {
++function useRoutesImpl(routes, locationArg, dataRouterState, slotName) {
+   !useInRouterContext() ? UNSAFE_invariant(false,
+   // TODO: This error is probably because they somehow have 2 versions of the
+   // router loaded. We can help them understand how to avoid that.
+@@ -285,7 +285,7 @@ function useRoutesImpl(routes, locationArg, dataRouterState) {
+   let parentPathname = routeMatch ? routeMatch.pathname : "/";
+   let parentPathnameBase = routeMatch ? routeMatch.pathnameBase : "/";
+   let parentRoute = routeMatch && routeMatch.route;
+-  {
++  if (!slotName) {
+     // You won't get a warning about 2 different <Routes> under a <Route>
+     // without a trailing *, but this is a best-effort warning anyway since we
+     // cannot even give the warning unless they land at the parent route.
+@@ -322,7 +322,7 @@ function useRoutesImpl(routes, locationArg, dataRouterState) {
+   let remainingPathname = parentPathnameBase === "/" ? pathname : pathname.slice(parentPathnameBase.length) || "/";
+   let matches = matchRoutes(routes, {
+     pathname: remainingPathname
+-  });
++  }).filter((m) => !slotName || m.pathname !== "/");
+   {
+     UNSAFE_warning(parentRoute || matches != null, `No routes matched location "${location.pathname}${location.search}${location.hash}" `) ;
+     UNSAFE_warning(matches == null || matches[matches.length - 1].route.element !== undefined || matches[matches.length - 1].route.Component !== undefined, `Matched leaf route at location "${location.pathname}${location.search}${location.hash}" ` + `does not have an element or Component. This means it will render an <Outlet /> with a ` + `null value by default resulting in an "empty" page.`) ;
+diff --git a/dist/umd/react-router.development.js b/dist/umd/react-router.development.js
+index 705c20b64989cad0d5a72f0c184e345a3b5bee04..9a6c05413fc8db306a9dc5c0503c533c92d082f6 100644
+--- a/dist/umd/react-router.development.js
++++ b/dist/umd/react-router.development.js
+@@ -340,7 +340,7 @@
+   }
+ 
+   // Internal implementation with accept optional param for RouterProvider usage
+-  function useRoutesImpl(routes, locationArg, dataRouterState) {
++  function useRoutesImpl(routes, locationArg, dataRouterState, slotName) {
+     !useInRouterContext() ? router.UNSAFE_invariant(false, // TODO: This error is probably because they somehow have 2 versions of the
+     // router loaded. We can help them understand how to avoid that.
+     "useRoutes() may be used only in the context of a <Router> component.")  : void 0;
+@@ -355,7 +355,7 @@
+     let parentPathname = routeMatch ? routeMatch.pathname : "/";
+     let parentPathnameBase = routeMatch ? routeMatch.pathnameBase : "/";
+     let parentRoute = routeMatch && routeMatch.route;
+-    {
++    if (!slotName) {
+       // You won't get a warning about 2 different <Routes> under a <Route>
+       // without a trailing *, but this is a best-effort warning anyway since we
+       // cannot even give the warning unless they land at the parent route.
+@@ -393,7 +393,7 @@
+     let remainingPathname = parentPathnameBase === "/" ? pathname : pathname.slice(parentPathnameBase.length) || "/";
+     let matches = router.matchRoutes(routes, {
+       pathname: remainingPathname
+-    });
++    }).filter((m) => !slotName || m.pathname !== "/");
+     {
+       router.UNSAFE_warning(parentRoute || matches != null, "No routes matched location \"" + location.pathname + location.search + location.hash + "\" ") ;
+       router.UNSAFE_warning(matches == null || matches[matches.length - 1].route.element !== undefined || matches[matches.length - 1].route.Component !== undefined, "Matched leaf route at location \"" + location.pathname + location.search + location.hash + "\" " + "does not have an element or Component. This means it will render an <Outlet /> with a " + "null value by default resulting in an \"empty\" page.") ;
