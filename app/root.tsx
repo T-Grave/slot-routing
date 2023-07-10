@@ -17,7 +17,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body style={{ height: "100%" }}>
+      <body style={{ height: "100%", fontFamily: "sans-serif" }}>
         <Outlet />
         <ScrollRestoration />
         <Scripts />

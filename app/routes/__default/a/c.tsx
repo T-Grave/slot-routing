@@ -1,19 +1,17 @@
 import { json } from "@remix-run/node";
-import { Outlet, useLoaderData } from "@remix-run/react";
-
+import { useLoaderData } from "@remix-run/react";
 export { defaultShouldRevalidate as shouldRevalidate } from "~/router/defaultShouldRevalidate";
 
 export const loader = () => {
-  return json({ result: "A" });
+  return json({ result: "C" });
 };
 
-export default function General() {
+export default function C() {
   const data = useLoaderData<typeof loader>();
-  console.log("A data: ", data);
+  console.log("C data: ", data);
   return (
     <div>
-      <h2>Content Page A</h2>
-      <Outlet />
+      <h3>Content Page A-Test</h3>
     </div>
   );
 }
