@@ -1,5 +1,6 @@
 import { Link, Outlet, useLocation, useSearchParams } from "@remix-run/react";
 import Slot from "~/router/Slot";
+import { SlotRouter } from "~/router/SlotRouter";
 
 export default function DefaultLayout() {
   // const location = useLocation();
@@ -47,7 +48,8 @@ export default function DefaultLayout() {
           height: "100%",
         }}
       >
-        {sidebar ? <Slot location={sidebar} name="sidepane" /> : "empty"}
+        {/* {sidebar ? <Slot location={sidebar} name="sidebar" /> : "empty"} */}
+        {sidebar ? <SlotRouter path={sidebar} /> : "empty"}
       </div>
     </div>
   );

@@ -1,0 +1,144 @@
+diff --git a/dist/router.cjs.js b/dist/router.cjs.js
+index c8d73defd805441c2962523d43524286a4148473..aa62c9b71c0748eb9798b019faf03875b40b69e2 100644
+--- a/dist/router.cjs.js
++++ b/dist/router.cjs.js
+@@ -718,19 +718,45 @@ function matchRoutes(routes, locationArg, basename) {
+   if (pathname == null) {
+     return null;
+   }
++
++  const search = new URLSearchParams(location.search);
++  const slots = [...search.entries()].reduce((acc, entry) => {
++    if (entry[0].startsWith("slot-")) {
++      acc.push(entry);
++    }
++    return acc;
++  }, []);
++  
+   let branches = flattenRoutes(routes);
+   rankRouteBranches(branches);
+-  let matches = null;
+-  for (let i = 0; matches == null && i < branches.length; ++i) {
+-    matches = matchRouteBranch(branches[i],
+-    // Incoming pathnames are generally encoded from either window.location
+-    // or from router.navigate, but we want to match against the unencoded
+-    // paths in the route definitions.  Memory router locations won't be
+-    // encoded here but there also shouldn't be anything to decode so this
+-    // should be a safe operation.  This avoids needing matchRoutes to be
+-    // history-aware.
+-    safelyDecodeURI(pathname));
++
++  function findMatchesForPathname(pathname) {
++    let matches = null;
++    for (let i = 0; matches == null && i < branches.length; ++i) {
++      matches = matchRouteBranch(branches[i],
++      // Incoming pathnames are generally encoded from either window.location
++      // or from router.navigate, but we want to match against the unencoded
++      // paths in the route definitions.  Memory router locations won't be
++      // encoded here but there also shouldn't be anything to decode so this
++      // should be a safe operation.  This avoids needing matchRoutes to be
++      // history-aware.
++      safelyDecodeURI(pathname));
++    }
++    return matches;
+   }
++
++  let matches = findMatchesForPathname(pathname);
++
++  // For each slot, we match another branch of routes.
++  // This will make it so a single route will be in the matches multiple times
++  // We will need to add a "slot" prop to differentiate between them in the future.
++  slots.forEach(([key, path]) => {
++    if (path) {
++      const slotMatches = findMatchesForPathname(path).map(m => ({ ...m, slot: { key, path } }));
++      matches.push(...slotMatches);
++    }
++  });
++  
+   return matches;
+ }
+ function flattenRoutes(routes, branches, parentsMeta, parentPath) {
+diff --git a/dist/router.js b/dist/router.js
+index 50611e682ca3a3df237e1b60a010ea460524f021..7adf247b5745c5bc7629cc5683d957253ed849aa 100644
+--- a/dist/router.js
++++ b/dist/router.js
+@@ -510,19 +510,45 @@ function matchRoutes(routes, locationArg, basename) {
+   if (pathname == null) {
+     return null;
+   }
++
++  const search = new URLSearchParams(location.search);
++  const slots = [...search.entries()].reduce((acc, entry) => {
++    if (entry[0].startsWith("slot-")) {
++      acc.push(entry);
++    }
++    return acc;
++  }, []);
++  
+   let branches = flattenRoutes(routes);
+   rankRouteBranches(branches);
+-  let matches = null;
+-  for (let i = 0; matches == null && i < branches.length; ++i) {
+-    matches = matchRouteBranch(branches[i],
+-    // Incoming pathnames are generally encoded from either window.location
+-    // or from router.navigate, but we want to match against the unencoded
+-    // paths in the route definitions.  Memory router locations won't be
+-    // encoded here but there also shouldn't be anything to decode so this
+-    // should be a safe operation.  This avoids needing matchRoutes to be
+-    // history-aware.
+-    safelyDecodeURI(pathname));
++
++  function findMatchesForPathname(pathname) {
++    let matches = null;
++    for (let i = 0; matches == null && i < branches.length; ++i) {
++      matches = matchRouteBranch(branches[i],
++      // Incoming pathnames are generally encoded from either window.location
++      // or from router.navigate, but we want to match against the unencoded
++      // paths in the route definitions.  Memory router locations won't be
++      // encoded here but there also shouldn't be anything to decode so this
++      // should be a safe operation.  This avoids needing matchRoutes to be
++      // history-aware.
++      safelyDecodeURI(pathname));
++    }
++    return matches;
+   }
++
++  let matches = findMatchesForPathname(pathname);
++
++  // For each slot, we match another branch of routes.
++  // This will make it so a single route will be in the matches multiple times
++  // We will need to add a "slot" prop to differentiate between them in the future.
++  slots.forEach(([key, path]) => {
++    if (path) {
++      const slotMatches = findMatchesForPathname(path).map(m => ({ ...m, slot: { key, path } }));
++      matches.push(...slotMatches);
++    }
++  });
++  
+   return matches;
+ }
+ function flattenRoutes(routes, branches, parentsMeta, parentPath) {
+@@ -1667,6 +1693,7 @@ function createRouter(init) {
+     // Create a controller/Request for this navigation
+     pendingNavigationController = new AbortController();
+     let request = createClientSideRequest(init.history, location, pendingNavigationController.signal, opts && opts.submission);
++    console.log('[startNavigation] request', request)
+     let pendingActionData;
+     let pendingError;
+     if (opts && opts.pendingError) {
+@@ -2250,7 +2277,14 @@ function createRouter(init) {
+     // Call all navigation loaders and revalidating fetcher loaders in parallel,
+     // then slice off the results into separate arrays so we can handle them
+     // accordingly
+-    let results = await Promise.all([...matchesToLoad.map(match => callLoaderOrAction("loader", request, match, matches, manifest, mapRouteProperties, basename)), ...fetchersToLoad.map(f => {
++    let results = await Promise.all([...matchesToLoad.map(match => { 
++      if (match.slot) {
++        const slotRequest = createClientSideRequest(init.history, match.slot.path, request.signal);
++        return callLoaderOrAction("loader", slotRequest, match, matches, manifest, mapRouteProperties, basename);
++      }
++
++      return callLoaderOrAction("loader", request, match, matches, manifest, mapRouteProperties, basename);
++    }), ...fetchersToLoad.map(f => {
+       if (f.matches && f.match && f.controller) {
+         return callLoaderOrAction("loader", createClientSideRequest(init.history, f.path, f.controller.signal), f.match, f.matches, manifest, mapRouteProperties, basename);
+       } else {
