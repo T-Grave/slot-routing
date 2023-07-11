@@ -1,6 +1,6 @@
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-export { defaultShouldRevalidate as shouldRevalidate } from "~/router/defaultShouldRevalidate";
+export { defaultShouldRevalidate as shouldRevalidate } from "~/slot-router/defaultShouldRevalidate";
 
 export const loader = () => {
   return json({ result: "B" });

@@ -1,5 +1,5 @@
 import { Link, Outlet } from "@remix-run/react";
-import Slot from "~/router/Slot";
+import Slot from "~/slot-router/Slot";
 
 export default function Index() {
   return (
